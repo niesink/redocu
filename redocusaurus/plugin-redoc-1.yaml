@@ -1,0 +1,735 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Eduarte Koppeling Onderwijscatalogus
+tags:
+  - name: Onderwijscatalogus
+    description: API gericht op het beheer van onderwijs- en examenprogramma's in Eduarte
+paths:
+  /onderwijsproducten:
+    post:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Onderwijsproduct'
+                - type: object
+                  properties:
+                    id:
+                      nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Onderwijsproduct'
+    get:
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      tags:
+        - Onderwijscatalogus
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            maximum: 200
+            default: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Paging'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Onderwijsproduct'
+  /onderwijsproducten/{externalId}:
+    get:
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      tags:
+        - Onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Onderwijsproduct'
+    put:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Onderwijsproduct'
+    delete:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /opleidingen:
+    post:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Opleiding'
+                - type: object
+                  properties:
+                    id:
+                      nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opleiding'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            maximum: 200
+            default: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Paging'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Opleiding'
+  /opleidingen/{externalId}:
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opleiding'
+    put:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opleiding'
+    delete:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /onderwijsproductsoorten:
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            maximum: 200
+            default: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Paging'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Onderwijsproductsoort'
+  /onderwijsproductsoorten/{externalId}:
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Onderwijsproductsoort'
+  /productregelsoorten:
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            maximum: 200
+            default: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Paging'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Productregelsoort'
+  /productregelsoorten/{externalId}:
+    get:
+      tags:
+        - Onderwijscatalogus
+      security:
+        - oauth2_client_credentials:
+            - read:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Productregelsoort'
+components:
+  securitySchemes:
+    oauth2_client_credentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.example.com/oauth/token
+          scopes:
+            read:onderwijscatalogus: Read access Onderwijscatalogus
+            write:onderwijscatalogus: Write access Onderwijscatalogus
+  schemas:
+    Paging:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    Identifier:
+      type: object
+      required:
+        - externalId
+      properties:
+        externalId:
+          type: string
+        internalId:
+          type: string
+    Reference:
+      type: object
+      required:
+        - externalId
+        - type
+      properties:
+        externalId:
+          type: string
+        displayName:
+          type: string
+        type:
+          type: string
+        href:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: INVALID_REFERENCE
+        detail:
+          type: string
+          example: Productregelsoort niet gevonden
+        path:
+          type: string
+          example: opleiding/cohort/2025-2026/productregel/P1ab/productregelsoort
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Onderwijsproduct:
+      type: object
+      required:
+        - id
+        - titel
+        - code
+        - onderwijsproductsoort
+        - status
+        - aggregatieniveau
+        - aanbod
+        - startonderwijsproduct
+        - begindatum
+        - tonenAanStudent
+      properties:
+        id:
+          $ref: '#/components/schemas/Identifier'
+        code:
+          type: string
+        afkorting:
+          type: string
+        titel:
+          type: string
+        omschrijving:
+          type: string
+        onderwijsproductsoort:
+          $ref: '#/components/schemas/Reference'
+        status:
+          type: string
+          enum:
+            - AANGEVRAAGD
+            - IN_ONTWIKKELING
+            - BESCHIKBAAR
+            - VERVALLEN
+            - NIET_BESCHIKBAAR
+        taxonomiecodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        aanbod:
+          type: array
+          items:
+            required:
+              - organisatieeenheid
+            properties:
+              organisatieeenheid:
+                $ref: '#/components/schemas/Reference'
+              locatie:
+                $ref: '#/components/schemas/Reference'
+        aggregatieniveau:
+          $ref: '#/components/schemas/Reference'
+        startonderwijsproduct:
+          type: boolean
+        credits:
+          type: number
+          format: float
+        begindatum:
+          type: string
+          format: date
+        eindddatum:
+          type: string
+          format: date
+        tonenAanStudent:
+          type: string
+          enum:
+            - ALLE_RESULTAATSTRUCTUREN
+            - ALLEEN_SUMMATIEVE_STRUCTUREN
+            - ALLEEN_FORMATIEVE_STRUCTUREN
+            - GEEN
+    Opleiding:
+      type: object
+      required:
+        - id
+        - code
+        - type
+        - naam
+        - wervingsnaam
+        - begindatum
+      properties:
+        id:
+          $ref: '#/components/schemas/Identifier'
+        type:
+          type: string
+          enum:
+            - REGULIER
+            - PARTICULIER
+        code:
+          type: string
+        naam:
+          type: string
+        wervingsnaam:
+          type: string
+        defaultIntensiteit:
+          type: string
+          enum:
+            - DEELTIJD
+            - VOLTIJD
+            - EXAMENDEELNEMER
+        duurInMaanden:
+          type: integer
+        belastingPerJaar:
+          type: integer
+        leerjaarVan:
+          type: integer
+        leerjaarTot:
+          type: integer
+        begindatum:
+          type: string
+          format: date
+        einddatum:
+          type: string
+          format: date
+        laatsteInschrijving:
+          type: string
+          format: date
+        ontsluitingDigitaalAanmelden:
+          type: boolean
+        metDuoCommuniceren:
+          type: boolean
+        landelijkeProductregelsNegeren:
+          type: boolean
+        landelijkeCriteriaNegeren:
+          type: boolean
+        ingebouwdeCriteriaNegeren:
+          type: boolean
+        diplomatekst1:
+          type: string
+        diplomatekst2:
+          type: string
+        diplomatekst3:
+          type: string
+        vrijeVelden:
+          type: array
+          items:
+            type: object
+            required:
+              - naam
+              - waarde
+            properties:
+              naam:
+                type: string
+              waarde:
+                type: string
+        aanbod:
+          type: array
+          items:
+            type: object
+            required:
+              - organisatieeenheid
+              - locatie
+            properties:
+              organisatieeenheid:
+                $ref: '#/components/schemas/Reference'
+              locatie:
+                $ref: '#/components/schemas/Reference'
+              team:
+                $ref: '#/components/schemas/Reference'
+        fases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        opleidingcohorten:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpleidingCohort'
+    OpleidingCohort:
+      type: object
+      properties:
+        cohort:
+          $ref: '#/components/schemas/Reference'
+        verbintenisgebied:
+          $ref: '#/components/schemas/Reference'
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Criterium'
+        keuzeregels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Keuzeregel'
+        productregels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Productregel'
+    Criterium:
+      type: object
+      required:
+        - volgnummer
+        - naam
+        - melding
+        - formule
+      properties:
+        verbintenisgebied:
+          $ref: '#/components/schemas/Reference'
+        volgnummer:
+          type: integer
+        naam:
+          type: string
+        melding:
+          type: string
+        formule:
+          type: string
+    Productregel:
+      type: object
+      required:
+        - typeProductregel
+        - afkorting
+        - volgnummer
+        - naam
+        - productregelsoort
+        - verplicht
+        - alleenTonen
+      properties:
+        typeProductregel:
+          type: string
+          enum:
+            - PRODUCTREGEL
+            - AFGELEIDE_PRODUCTREGEL
+          default: PRODUCTREGEL
+        afkorting:
+          type: string
+        naam:
+          type: string
+        productregelsoort:
+          $ref: '#/components/schemas/Reference'
+        verbintenisgebied:
+          $ref: '#/components/schemas/Reference'
+        volgnummer:
+          type: integer
+        verplicht:
+          type: boolean
+        combinatievak:
+          type: boolean
+        diplomavak:
+          type: boolean
+        afdrukkenCijferlijst:
+          type: boolean
+        minimaleWaarde:
+          type: integer
+        minimaleWaardeTekst:
+          type: string
+        gekoppeldeProductregel:
+          $ref: '#/components/schemas/Reference'
+        alleenTonen:
+          type: boolean
+        toegestaneOnderwijsproducten:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        fase:
+          $ref: '#/components/schemas/Reference'
+        formatief:
+          type: boolean
+    Keuzeregel:
+      type: object
+      required:
+        - code
+        - roosterstructuur
+        - roosterperiode
+      properties:
+        code:
+          type: string
+        omschrijving:
+          type: string
+        roosterstructuur:
+          $ref: '#/components/schemas/Reference'
+        roosterperiode:
+          $ref: '#/components/schemas/Reference'
+        verplicht:
+          type: boolean
+        arrangement:
+          type: boolean
+        minimaleBelasting:
+          type: integer
+        maximaleBelasting:
+          type: integer
+        minAantalOnderwijsproducten:
+          type: integer
+        maxAantalOnderwijsproducten:
+          type: integer
+        keuzeregelonderdelen:
+          type: array
+          items:
+            type: object
+            properties:
+              productregel:
+                $ref: '#/components/schemas/Reference'
+              onderwijsproduct:
+                $ref: '#/components/schemas/Reference'
+    Onderwijsproductsoort:
+      type: object
+      required:
+        - id
+        - code
+        - naam
+        - actief
+        - summatief
+        - stage
+      properties:
+        id:
+          $ref: '#/components/schemas/Identifier'
+        code:
+          type: string
+        naam:
+          type: string
+        actief:
+          type: boolean
+        summatief:
+          type: boolean
+        stage:
+          type: boolean
+    Productregelsoort:
+      type: object
+      required:
+        - id
+        - volgnummer
+        - naam
+        - actief
+        - taxonomie
+      properties:
+        id:
+          $ref: '#/components/schemas/Identifier'
+        volgnummer:
+          type: string
+        naam:
+          type: string
+        actief:
+          type: boolean
+        taxonomie:
+          $ref: '#/components/schemas/Reference'

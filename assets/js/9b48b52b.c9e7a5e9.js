@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkredocu=self.webpackChunkredocu||[]).push([[305],{5567:e=>{e.exports=JSON.parse('{"tags":[{"label":"test","permalink":"/redocu/docs/tags/test","count":1}]}')}}]);
