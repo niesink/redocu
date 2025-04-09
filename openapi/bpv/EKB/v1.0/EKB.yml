@@ -1,0 +1,416 @@
+openapi: 3.0.0
+info:
+  version: "1.0"
+  title: EA Koppeling BPV
+tags:
+  - name: EKB
+    description: API gericht op het beheer van bpv matching en begeleiding in EA
+paths:
+  /bpvinschrijving:
+    get:
+      security:
+        - oauth2_client_credentials: 
+          - read:onderwijscatalogus
+      tags:
+      - BPVInschrijving
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            maximum: 200
+            default: 100
+        - name: deelnemer_email
+          in: query
+          schema:
+            type: string
+            format: email
+        - name: deelnemer_nummer
+          in: query
+          schema:
+            type: string
+        - name: deelnemer_externalid
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Paging'
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BPVInschrijving'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+    post:
+      tags:
+      - BPVInschrijving
+      security:
+        - oauth2_client_credentials: 
+          - write:ekb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BPVInschrijving'
+                - type: object
+                  properties:
+                    id: 
+                      nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BPVInschrijving'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+
+  /bpvinschrijving/{externalId}:
+    get:
+      security:
+        - oauth2_client_credentials: 
+          - read:onderwijscatalogus
+      tags:
+      - BPVInschrijving
+        
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BPVInschrijving'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+    put:
+      tags:
+      - BPVInschrijving
+      security:
+        - oauth2_client_credentials: 
+          - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BPVInschrijving'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+
+  /bpvinschrijving/{externalId}/logentries:
+    get:
+      security:
+        - oauth2_client_credentials: 
+          - read:onderwijscatalogus
+      tags:
+      - LogEntry
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogEntry'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+    post:
+      tags:
+      - LogEntry
+      security:
+        - oauth2_client_credentials: 
+          - write:onderwijscatalogus
+      parameters:
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LogEntry'
+                - type: object
+                  properties:
+                    id: 
+                      nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogEntry'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+
+  /bpvinschrijving/{BPVInschrijvingExternalId}/logentries/{externalId}:
+    patch:
+      tags:
+      - LogEntry
+      security:
+        - oauth2_client_credentials: 
+          - write:onderwijscatalogus
+      parameters:
+        - name: BPVInschrijvingExternalId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: externalId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LogEntry'
+                - type: object
+                  properties:
+                    id: 
+                      nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogEntry'
+        '400':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorBadRequest.yaml'
+        '401':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorUnauthorized.yaml'
+        '403':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorForbidden.yaml'
+        '405':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorMethodNotAllowed.yaml'
+        '429':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorTooManyRequests.yaml'
+        '500':
+          $ref: '../../../common/EK/v1.0/schemas/ErrorInternalServerError.yaml'
+
+components:
+  securitySchemes:
+    oauth2_client_credentials:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://d-login.educus.nl/oauth/token
+          scopes:
+            read:ekb: Read access BPV
+            write:ekb: Write access BPV
+  schemas:
+    BPVInschrijving:
+      type: object
+      required:
+        - id
+        - titel
+        - code
+        - status
+      properties:
+        id:
+          $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Identifier'
+        code:
+          type: string
+        afkorting:
+          type: string
+        titel:
+          type: string
+        omschrijving:
+          type: string
+        status:
+          type: string
+          enum: [AANGEVRAAGD,IN_ONTWIKKELING,BESCHIKBAAR,VERVALLEN,NIET_BESCHIKBAAR]
+        begindatum:
+          type: string
+          format: date
+        eindddatum:
+          type: string
+          format: date
+        afsluitddatum:
+          type: string
+          format: date
+        deelnemer:
+          $ref: '#/components/schemas/Deelnemer'
+        schoolbegeleider:
+          $ref: '#/components/schemas/Begeleider'
+        bedrijf: 
+          $ref: '#/components/schemas/Bedrijf'
+        bedrijfsbegeleider:
+          $ref: '#/components/schemas/Begeleider'
+    Deelnemer:
+      type: object
+      required:
+        - id
+        - naam
+        - studentnummer
+        - voorletters
+      properties:
+        id:
+          $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Identifier'
+        naam:
+          type: string
+        studentnummer:
+          type: string
+        voorletters:
+          type: string
+        groepen:
+          type: array
+          items:
+            type: string
+
+    Bedrijf:
+      type: object
+      required:
+        - id
+        - naam
+        - adres
+        - email
+      properties:
+        id:
+          $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Identifier'
+        naam:
+          type: string
+        adres:
+          type: string
+        email:
+          type: string
+          format: email
+
+    Begeleider:
+      type: object
+      required:
+        - id
+        - naam
+        - email
+      properties:
+        id:
+          $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Identifier'
+        naam:
+          type: string
+        email:
+          type: string
+          format: email
+          
+    LogEntry:
+      type: object
+      required:
+        - datum
+        - status
+      properties:
+        id:
+          $ref: './../../../common/EK/v1.0/common_components_v1.0.yml#/components/schemas/Identifier'
+        datum:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [Nieuw, Ingediend, Goedgekeurd, Afgekeurd]
+        urenAfwezig:
+          type: integer
+        urenAanwezig:
+          type: integer
+        bericht:
+          type: string
+        gemoedstoestand:
+          type: string
+          enum: [Blij, Tevreden, Ontevreden, Boos]
