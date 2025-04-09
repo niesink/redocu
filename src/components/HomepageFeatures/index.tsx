@@ -3,50 +3,56 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
+// Import the PNG images (recommended way)
+import eaImage from '@site/static/img/ea.png';
+import connectImage from '@site/static/img/connect.png';
+import docsImage from '@site/static/img/docs.png';
+
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  imgSrc: string;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'EA',
+    imgSrc: eaImage,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        EA is jouw partner voor flexibel beroepsonderwijs. EA biedt vlekkeloze informatievoorziening voor student, docent, stagebedrijf, administratie en management.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Connect',
+    imgSrc: connectImage,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Met EA heb je je administratie op orde en wordt het management goed geïnformeerd met eenduidige en betrouwbare informatie. 
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Docs',
+    imgSrc: docsImage,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Bij implementatietrajecten zetten onze consultants hun kennis en kunde graag voor je in. Ze geven toekomstbestendig advies over het gebruik en de inrichting van EA. 
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, imgSrc, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+      <img
+          className={styles.featureSvg} // You can keep this class or rename to styles.featureImage
+          src={imgSrc} // Use the imgSrc prop for the src attribute
+          alt={title} // Add alt text for accessibility
+        />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
