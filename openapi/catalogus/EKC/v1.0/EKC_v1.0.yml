@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   version: "1.0"
-  title: Eduarte Koppeling Onderwijscatalogus
+  title: EA Koppeling Onderwijscatalogus
 tags:
   - name: Onderwijscatalogus
-    description: API gericht op het beheer van onderwijs- en examenprogramma's in Eduarte
+    description: API gericht op het beheer van onderwijs- en examenprogramma's in EA
 paths:
   /onderwijsproducten:
     post:
